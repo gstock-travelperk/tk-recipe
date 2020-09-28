@@ -51,7 +51,8 @@ class RecipeApiTests(TestCase):
 
         payload = {
             'name': 'Vegan Pizza',
-            'description': 'Pizza with artificial cheese'
+            'description': 'Pizza with artificial cheese',
+            'ingredients': [{'name': 'cheese'}, {'name': 'dough'}]
         }
 
         res = self.client.post(RECIPE_URL, payload)
