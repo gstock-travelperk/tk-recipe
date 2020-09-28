@@ -90,6 +90,25 @@ class RecipeApiTests(TestCase):
         recipe.refresh_from_db()
         self.assertEqual(recipe.description, payload['description'])
 
+    def test_update_recipe_ingredients(self):
+        """
+        Tests that a recipe can be updated
+        """
+
+        recipe = sample_recipe("Beef mariachi", "Beef with a lot of chili")
+        url = detail_url(recipe.id)
+
+        payload = {
+            'description': 'Beef with a lot of chili sauce',
+            'ingredients': [{'name': 'cheese'}, {'name': 'dough'}]
+        }
+        res = self.client.patch(url, payload)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        recipe.refresh_from_db()
+        ingredients = recipe.ingredients.all()
+        self.assertEqual(len(ingredients), 2)
+
     def test_delete_recipe(self):
         """
         Tests that a recipe can be deleted
