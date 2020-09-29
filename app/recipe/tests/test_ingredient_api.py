@@ -103,11 +103,10 @@ class IngredientApiTests(TestCase):
         recipe = sample_recipe("Spaghetti bolognesa",
                                "Pasta with meat and tomato sauce")
         ingredient = sample_ingredient("Spaghetti", recipe)
+        old_id = ingredient.id
 
         url = detail_url(ingredient.id)
         res = self.client.delete(url)
 
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
-
-        ingredients = Ingredient.objects.all()
-        self.assertEqual(len(ingredients), 0)
+        self.assertFalse(Ingredient.objects.filter(pk=old_id).exists())
