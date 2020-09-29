@@ -71,6 +71,9 @@ class IngredientApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
+        exists = Ingredient.objects.filter(name=payload['name']).exists()
+        self.assertTrue(exists)
+
     def test_update_ingredient(self):
         """
         Tests that an ingredient can be updated
