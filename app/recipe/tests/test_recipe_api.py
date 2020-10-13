@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
+import json
 
 from core.models import Recipe
 from recipe.serializers import RecipeSerializer
@@ -102,7 +103,10 @@ class RecipeApiTests(TestCase):
             'description': 'Beef with a lot of chili sauce',
             'ingredients': [{'name': 'cheese'}, {'name': 'dough'}]
         }
-        res = self.client.patch(url, payload)
+
+        # res = self.client.patch(url, payload)
+        res = self.client.patch(url, json.dumps(
+            payload), content_type='application/json')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
         recipe.refresh_from_db()
