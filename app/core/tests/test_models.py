@@ -21,7 +21,7 @@ class ModelTests(TestCase):
         """
         Tests the recipe model
         """
-        recipe = models.Recipe.objects.create(
+        recipe = sample_recipe(
             name='Chicken salami',
             description='Chicken breast with salami')
         self.assertEqual(str(recipe), recipe.name)
